@@ -1,46 +1,50 @@
-import { useState, useEffect } from "react";
-import FormularioContacto from "./components/FormularioContacto";
-import ContactoCard from "./components/ContactoCard";
+import React, { useEffect, useState } from "react";
+import { listarContactos, crearContacto, eliminarContactoPorId } from "./api.js";
+import FormularioContacto from "./components/FormularioContacto.jsx";
+import ContactoCard from "./components/ContactoCard.jsx";
 
 export default function App() {
-  const [contactos, setContactos] = useState(() => {
-    const guardados = localStorage.getItem("contactos");
-    return guardados ? JSON.parse(guardados) : [];
-  });
+  const [contactos, setContactos] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem("contactos", JSON.stringify(contactos));
-  }, [contactos]);
+    listarContactos()
+      .then((data) => setContactos(data))
+      .catch((err) => console.error("Error al listar contactos:", err));
+  }, []);
 
-  function agregarContacto(nuevoContacto) {
-    setContactos([...contactos, nuevoContacto]);
-  }
+  const agregarContacto = async (form) => {
+    try {
+      const nuevo = await crearContacto(form);
+      setContactos([...contactos, nuevo]);
+    } catch (error) {
+      console.error("Error al agregar contacto:", error);
+    }
+  };
 
-  function eliminarContacto(id) {
-    setContactos(contactos.filter((c) => c.id !== id));
-  }
+  const eliminarContacto = async (id) => {
+    try {
+      await eliminarContactoPorId(id);
+      setContactos(contactos.filter((c) => c.id !== id));
+    } catch (error) {
+      console.error("Error al eliminar contacto:", error);
+    }
+  };
 
   return (
-    <main className="max-w-2xl mx-auto mt-10 p-4">
-      {/* Etiqueta institucional ADSO - Mini reto práctico (página 15) */}
-      <div className="flex justify-center mb-3">
-        <p className="bg-morado text-white text-xs rounded px-2 py-1 w-fit">
-          ADSO
-        </p>
-      </div>
+    <main className="min-h-screen bg-gray-50">
+      <header className="max-w-6xl mx-auto px-6 pt-8">
+        <h1 className="text-4xl md:text-5xl font-black text-purple-600 text-center md:text-left">
+          Agenda ADSO v5
+        </h1>
+      </header>
 
-      <h1 className="text-3xl font-bold text-morado text-center mb-2">
-        Agenda ADSO v4
-      </h1>
-      <p className="text-gray-500 text-center mb-6">
-        Interfaz moderna con TailwindCSS
-      </p>
+      <section className="max-w-6xl mx-auto px-6 mt-8">
+        <FormularioContacto onAgregar={agregarContacto} />
+      </section>
 
-      <FormularioContacto onAgregar={agregarContacto} />
-
-      <section>
+      <section className="max-w-6xl mx-auto px-6 mt-8 grid gap-4">
         {contactos.length === 0 ? (
-          <p className="text-center text-gray-400 mt-4">
+          <p className="text-center text-gray-400">
             No hay contactos aún. ¡Agrega el primero!
           </p>
         ) : (
