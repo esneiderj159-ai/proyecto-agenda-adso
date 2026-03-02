@@ -1,0 +1,18 @@
+{
+  "contactos": [
+    {
+      "id": "1",
+      "nombre": "Gustavo",
+      "telefono": "3217532037",
+      "correo": "gabodorado@gmail.com",
+      "etiqueta": "profe"
+    },
+    {
+      "id": "5fb6",
+      "nombre": "salamanca",
+      "telefono": "232432647658",
+      "correo": "salamanca22@gmail.com",
+      "etiqueta": "programador"
+    }
+  ]
+}
