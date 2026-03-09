@@ -1,204 +1,71 @@
-// Importamos React y el hook useState para manejar estados locales del componente
 import { useState } from "react";
 
-// Componente FormularioContacto
-// Recibe como prop la función onAgregar (para crear un contacto en la API)
 function FormularioContacto({ onAgregar }) {
-
-  // Estado principal del formulario: almacena los valores de cada campo
-  const [form, setForm] = useState({
-    nombre: "",
-    telefono: "",
-    correo: "",
-    etiqueta: "",
-  });
-
-  // Estado para almacenar los mensajes de error de validación por cada campo
-  const [errores, setErrores] = useState({
-    nombre: "",
-    telefono: "",
-    correo: "",
-  });
-
-  // Estado que indica si el formulario está enviando la información al servidor
-  // Sirve para desactivar el botón y mostrar un texto diferente
+  const [nombre, setNombre] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [etiqueta, setEtiqueta] = useState("");
   const [enviando, setEnviando] = useState(false);
 
-  // Función manejadora del cambio de los inputs
-  // Se ejecuta cada vez que el usuario escribe en un campo
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    // Actualizamos solo el campo que cambió, manteniendo el resto igual
-    setForm((prevForm) => ({
-      ...prevForm,
-      [name]: value,
-    }));
-  };
-
-  // Función encargada de validar todos los campos del formulario
-  // Devuelve true si el formulario es válido, false en caso contrario
-  function validarFormulario() {
-    // Objeto temporal para guardar los mensajes de error
-    const nuevosErrores = { nombre: "", telefono: "", correo: "" };
-
-    // Validación del campo "nombre"
-    // .trim() elimina espacios en blanco al inicio y al final
-    // Evita que el usuario envíe solo espacios como si fuera un dato válido
-    if (!form.nombre.trim()) {
-      nuevosErrores.nombre = "El nombre es obligatorio.";
-    }
-
-    // Validación del campo "telefono"
-    if (!form.telefono.trim()) {
-      nuevosErrores.telefono = "El teléfono es obligatorio.";
-    }
-
-    // Validación del campo "correo"
-    if (!form.correo.trim()) {
-      // Si el usuario no escribió nada
-      nuevosErrores.correo = "El correo es obligatorio.";
-    } else if (!form.correo.includes("@")) {
-      // Si escribió texto pero no contiene el símbolo @
-      nuevosErrores.correo = "El correo debe contener @.";
-    }
-
-    // Actualizamos el estado de errores para que React los muestre en pantalla
-    setErrores(nuevosErrores);
-
-    // Retornamos true SOLO si no hay mensajes de error en ningún campo
-    return (
-      !nuevosErrores.nombre &&
-      !nuevosErrores.telefono &&
-      !nuevosErrores.correo
-    );
-  }
-
-  // Función manejadora del envío del formulario (async por la llamada a la API)
-  const onSubmit = async (e) => {
-    // Evitamos que el formulario recargue la página por defecto
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Ejecutamos la validación. Si no es válida, salimos sin guardar
-    const esValido = validarFormulario();
-    if (!esValido) return;
-
+    setEnviando(true);
     try {
-      // Marcamos que el formulario está en proceso de envío
-      setEnviando(true);
-
-      // ⏱️ TEMPORAL PARA CAPTURA - borra esta línea después de tomar el screenshot
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-
-      // Llamamos a la función del padre que guarda el contacto en la API
-      await onAgregar(form);
-
-      // Si todo fue exitoso, limpiamos los campos del formulario
-      setForm({ nombre: "", telefono: "", correo: "", etiqueta: "" });
-
-      // También limpiamos los mensajes de error
-      setErrores({ nombre: "", telefono: "", correo: "" });
-
+      await onAgregar({ nombre, telefono, correo, etiqueta });
+      setNombre("");
+      setTelefono("");
+      setCorreo("");
+      setEtiqueta("");
+    } catch (error) {
+      console.error("Error al enviar contacto:", error);
     } finally {
-      // Independientemente del resultado, apagamos el estado de "enviando"
       setEnviando(false);
     }
   };
 
-  // JSX que renderiza el formulario en pantalla
   return (
     <form
-      className="bg-white shadow-sm rounded-2xl p-6 space-y-4 mb-8"
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
+      className="mb-6 bg-white shadow rounded-lg p-4 space-y-3"
     >
-      {/* Título del formulario */}
-      <h2 className="text-lg font-semibold text-gray-900 mb-2">
-        Nuevo contacto
-      </h2>
-
-      {/* Campo Nombre */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Nombre *
-        </label>
-        <input
-          className="w-full rounded-xl border-gray-300 focus:ring-purple-500 focus:border-purple-500"
-          name="nombre"
-          placeholder="Ej: Camila Pérez"
-          value={form.nombre}
-          onChange={onChange}
-        />
-        {/* Si existe un error en nombre, lo mostramos debajo del input */}
-        {errores.nombre && (
-          <p className="mt-1 text-xs text-red-600">{errores.nombre}</p>
-        )}
-      </div>
-
-      {/* Campo Teléfono */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Teléfono *
-        </label>
-        <input
-          className="w-full rounded-xl border-gray-300 focus:ring-purple-500 focus:border-purple-500"
-          name="telefono"
-          placeholder="Ej: 300 123 4567"
-          value={form.telefono}
-          onChange={onChange}
-        />
-        {/* Mensaje de error específico para el campo teléfono */}
-        {errores.telefono && (
-          <p className="mt-1 text-xs text-red-600">{errores.telefono}</p>
-        )}
-      </div>
-
-      {/* Campo Correo */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Correo *
-        </label>
-        <input
-          className="w-full rounded-xl border-gray-300 focus:ring-purple-500 focus:border-purple-500"
-          name="correo"
-          placeholder="Ej: camila@sena.edu.co"
-          value={form.correo}
-          onChange={onChange}
-        />
-        {/* Mensaje de error específico para el campo correo */}
-        {errores.correo && (
-          <p className="mt-1 text-xs text-red-600">{errores.correo}</p>
-        )}
-      </div>
-
-      {/* Campo Etiqueta (opcional, no requiere validación) */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Etiqueta (opcional)
-        </label>
-        <input
-          className="w-full rounded-xl border-gray-300 focus:ring-purple-500 focus:border-purple-500"
-          name="etiqueta"
-          placeholder="Ej: Trabajo"
-          value={form.etiqueta}
-          onChange={onChange}
-        />
-      </div>
-
-      {/* Botón de envío: se desactiva mientras enviando sea true */}
-      <div className="pt-2">
-        <button
-          type="submit"
-          disabled={enviando}
-          className="w-full md:w-auto bg-purple-600 hover:bg-purple-700
-            disabled:bg-purple-300 disabled:cursor-not-allowed
-            text-white px-6 py-3 rounded-xl font-semibold shadow-sm"
-        >
-          {/* Texto dinámico: cambia según el estado enviando */}
-          {enviando ? "Guardando..." : "Agregar contacto"}
-        </button>
-      </div>
+      <input
+        type="text"
+        placeholder="Nombre"
+        value={nombre}
+        onChange={(e) => setNombre(e.target.value)}
+        className="w-full px-3 py-2 border rounded-lg text-sm"
+        required
+      />
+      <input
+        type="text"
+        placeholder="Teléfono"
+        value={telefono}
+        onChange={(e) => setTelefono(e.target.value)}
+        className="w-full px-3 py-2 border rounded-lg text-sm"
+      />
+      <input
+        type="email"
+        placeholder="Correo"
+        value={correo}
+        onChange={(e) => setCorreo(e.target.value)}
+        className="w-full px-3 py-2 border rounded-lg text-sm"
+      />
+      <input
+        type="text"
+        placeholder="Etiqueta (ej: trabajo, familia)"
+        value={etiqueta}
+        onChange={(e) => setEtiqueta(e.target.value)}
+        className="w-full px-3 py-2 border rounded-lg text-sm"
+      />
+      <button
+        type="submit"
+        disabled={enviando}
+        className="w-full bg-purple-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-600 disabled:opacity-50"
+      >
+        {enviando ? "Guardando..." : "Agregar contacto"}
+      </button>
     </form>
   );
 }
 
-// Exportamos el componente para usarlo en App.jsx
 export default FormularioContacto;

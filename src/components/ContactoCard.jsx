@@ -1,40 +1,28 @@
-// Este componente muestra un contacto individual.
-// Incluye nombre, teléfono, correo, etiqueta y el botón de eliminar.
-export default function ContactoCard({ nombre, telefono, correo, etiqueta, onEliminar }) {
+function ContactoCard({ nombre, telefono, correo, etiqueta, onEliminar }) {
   return (
-    <div className="bg-white shadow-sm border border-gray-200 rounded-2xl p-6 flex items-start justify-between">
-      {/* Información del contacto */}
-      <div className="space-y-1">
-        {/* Nombre */}
-        <h3 className="text-xl font-semibold text-gray-800">{nombre}</h3>
-
-        {/* Teléfono */}
-        <p className="text-gray-600 text-sm flex items-center gap-2">
-          <span className="text-purple-500 text-lg">📞</span>
-          {telefono}
-        </p>
-
-        {/* Correo */}
-        <p className="text-gray-600 text-sm flex items-center gap-2">
-          <span className="text-purple-500 text-lg">✉️</span>
-          {correo}
-        </p>
-
-        {/* Etiqueta (si existe) */}
+    <div className="bg-white shadow rounded-lg p-4 flex justify-between items-center">
+      <div>
+        <h2 className="text-lg font-semibold text-gray-900">{nombre}</h2>
+        {telefono && (
+          <p className="text-sm text-gray-600">Teléfono: {telefono}</p>
+        )}
+        {correo && (
+          <p className="text-sm text-gray-600">Correo: {correo}</p>
+        )}
         {etiqueta && (
-          <span className="inline-block bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full mt-2">
+          <span className="inline-block mt-1 px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded-full">
             {etiqueta}
           </span>
         )}
       </div>
-
-      {/* Botón de eliminar */}
       <button
         onClick={onEliminar}
-        className="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded-lg shadow transition"
+        className="px-3 py-1 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600"
       >
         Eliminar
       </button>
     </div>
   );
 }
+
+export default ContactoCard;
