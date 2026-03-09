@@ -1,32 +1,39 @@
 {
   "contactos": [
     {
-      "id": "5fb6",
-      "nombre": "Salamanca",
-      "telefono": "232432647658",
-      "correo": "salamanca22@gmail.com",
-      "etiqueta": "programador"
+      "id": "ea6e",
+      "nombre": "milton",
+      "telefono": "300 0000001",
+      "correo": "milton888@gmail.com",
+      "etiqueta": "bombero"
     },
     {
-      "id": "8a21",
-      "nombre": "Laura Martínez",
-      "telefono": "3104567890",
-      "correo": "laura.martinez@gmail.com",
-      "etiqueta": "diseñadora"
+      "id": "8ad1",
+      "nombre": "milton",
+      "telefono": "300 0000001",
+      "correo": "milton888@gmail.com",
+      "etiqueta": "INDIGENTE"
     },
     {
-      "id": "c9d3",
-      "nombre": "Carlos Pérez",
-      "telefono": "3009876543",
-      "correo": "carlos.perez@gmail.com",
-      "etiqueta": "ingeniero"
+      "id": "7739",
+      "nombre": "SNEIDER ",
+      "telefono": "300 0000001",
+      "correo": "milton888@gmail.com",
+      "etiqueta": "INDIGENTE"
     },
     {
-      "id": "f7e4",
-      "nombre": "Mariana Gómez",
-      "telefono": "3156789021",
-      "correo": "mariana.gomez@gmail.com",
-      "etiqueta": "emprendedora"
+      "id": "88f2",
+      "nombre": "SNEIDER ",
+      "telefono": "300 0000001",
+      "correo": "milton888@gmail.com",
+      "etiqueta": "INDIGENTE"
+    },
+    {
+      "id": "8e53",
+      "nombre": "milton",
+      "telefono": "300 0000001",
+      "correo": "milton888@gmail.com",
+      "etiqueta": "bombero"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

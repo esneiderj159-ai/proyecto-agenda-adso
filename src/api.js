@@ -1,26 +1,40 @@
-const API = "http://localhost:3002/contactos";
+// Archivo: src/api.js
+// Capa de acceso a datos de Agenda ADSO (llamados a la API REST con JSON Server).
 
-// Listar todos los contactos
+// Importamos la URL base desde config.js
+// Así si cambia el puerto o la ruta, solo se modifica en un solo lugar
+import { API_BASE_URL } from "./config";
+
+// Función GET: obtener la lista completa de contactos desde la API
 export async function listarContactos() {
-  const res = await fetch(API);
+  // Hacemos un GET a la URL base (devuelve el array de contactos)
+  const res = await fetch(API_BASE_URL);
+  // Si la respuesta no es correcta (código 4xx o 5xx), lanzamos un error
   if (!res.ok) throw new Error("Error al listar contactos");
+  // Parseamos el JSON y lo retornamos
   return res.json();
 }
 
-// Crear un nuevo contacto
+// Función POST: crear un nuevo contacto en la API
 export async function crearContacto(data) {
-  const res = await fetch(API, {
+  // Hacemos un POST a la URL base enviando el objeto como JSON
+  const res = await fetch(API_BASE_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" }, // Indicamos que el body es JSON
+    body: JSON.stringify(data), // Convertimos el objeto JavaScript a JSON
   });
-  if (!res.ok) throw new Error("Error al crear contacto");
-  return res.json(); // JSON Server genera id automáticamente
+  // Validamos la respuesta
+  if (!res.ok) throw new Error("Error al crear el contacto");
+  // Devolvemos el contacto creado que regresa la API (incluye el id generado)
+  return res.json();
 }
 
-// Eliminar contacto por ID
+// Función DELETE: eliminar un contacto por su id
 export async function eliminarContactoPorId(id) {
-  const res = await fetch(`${API}/${id}`, { method: "DELETE" });
-  if (!res.ok) throw new Error("Error al eliminar contacto");
+  // Hacemos un DELETE a /contactos/:id usando la URL base
+  const res = await fetch(`${API_BASE_URL}/${id}`, { method: "DELETE" });
+  // Validamos la respuesta
+  if (!res.ok) throw new Error("Error al eliminar el contacto");
+  // Retornamos true indicando que la eliminación fue exitosa
   return true;
 }
