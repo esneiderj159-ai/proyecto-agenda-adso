@@ -6,6 +6,13 @@
       "correo": "juan@example.com",
       "etiqueta": "BARBERO",
       "id": "a8fd"
+    },
+    {
+      "id": "411d",
+      "nombre": "angel el beibi",
+      "telefono": "3001234567",
+      "correo": "cr72@gmail.com",
+      "etiqueta": "futbolista"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
