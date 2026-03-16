@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-import { useEffect, useState } from "react";
-import {
-  listarContactos,
-  crearContacto,
-  eliminarContactoPorId,
-} from "./api";
-import { APP_INFO } from "./config";
-import FormularioContacto from "./components/FormularioContacto.jsx";
-import ContactoCard from "./components/ContactoCard.jsx";
-
-function App() {
-  const [contactos, setContactos] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState("");
-  const [busqueda, setBusqueda] = useState("");
-  const [ordenAsc, setOrdenAsc] = useState(true);
-
-=======
 // Importamos hooks de React
 import { useEffect, useState } from "react";
 
@@ -55,21 +36,15 @@ function App() {
   const [contactoEnEdicion, setContactoEnEdicion] = useState(null);
 
   // Cargar contactos al iniciar
->>>>>>> 6e8b401 (clase 11_V9_ADSO)
   useEffect(() => {
     const cargarContactos = async () => {
       try {
         setCargando(true);
         setError("");
-<<<<<<< HEAD
-        const data = await listarContactos();
-        setContactos(data);
-=======
 
         const data = await listarContactos();
         setContactos(data);
 
->>>>>>> 6e8b401 (clase 11_V9_ADSO)
       } catch (error) {
         console.error("Error al cargar contactos:", error);
         setError(
@@ -79,47 +54,29 @@ function App() {
         setCargando(false);
       }
     };
-<<<<<<< HEAD
+
     cargarContactos();
   }, []);
 
+  // Agregar contacto
   const onAgregarContacto = async (nuevoContacto) => {
     try {
       setError("");
+
       const creado = await crearContacto(nuevoContacto);
+
       setContactos((prev) => [...prev, creado]);
+
     } catch (error) {
       console.error("Error al crear contacto:", error);
+
       setError(
         "No se pudo guardar el contacto. Verifica tu conexión o el estado del servidor e intenta nuevamente."
       );
-=======
 
-    cargarContactos();
-  }, []);
-
-  // Agregar contacto con delay visual
-const onAgregarContacto = async (nuevoContacto) => {
-  try {
-    setError("");
-
-    const creado = await crearContacto(nuevoContacto);
-
-    // Pequeño delay para que se vea el guardando
-    await new Promise((resolve) => setTimeout(resolve, 500)); // 500ms
-
-    setContactos((prev) => [...prev, creado]);
-
-  } catch (error) {
-    console.error("Error al crear contacto:", error);
-
-    setError(
-      "No se pudo guardar el contacto. Verifica tu conexión o el estado del servidor e intenta nuevamente."
-    );
-
-    throw error;
-  }
-};
+      throw error;
+    }
+  };
 
   // Actualizar contacto
   const onActualizarContacto = async (contactoActualizado) => {
@@ -144,20 +101,10 @@ const onAgregarContacto = async (nuevoContacto) => {
         "No se pudo actualizar el contacto. Verifica tu conexión o el servidor e intenta nuevamente."
       );
 
->>>>>>> 6e8b401 (clase 11_V9_ADSO)
       throw error;
     }
   };
 
-<<<<<<< HEAD
-  const onEliminarContacto = async (id) => {
-    try {
-      setError("");
-      await eliminarContactoPorId(id);
-      setContactos((prev) => prev.filter((c) => c.id !== id));
-    } catch (error) {
-      console.error("Error al eliminar contacto:", error);
-=======
   // Eliminar contacto
   const onEliminarContacto = async (id) => {
     try {
@@ -174,15 +121,12 @@ const onAgregarContacto = async (nuevoContacto) => {
     } catch (error) {
       console.error("Error al eliminar contacto:", error);
 
->>>>>>> 6e8b401 (clase 11_V9_ADSO)
       setError(
         "No se pudo eliminar el contacto. Vuelve a intentarlo o verifica el servidor."
       );
     }
   };
 
-<<<<<<< HEAD
-=======
   // Activar modo edición
   const onEditarClick = (contacto) => {
     setContactoEnEdicion(contacto);
@@ -195,7 +139,6 @@ const onAgregarContacto = async (nuevoContacto) => {
   };
 
   // FILTRAR contactos
->>>>>>> 6e8b401 (clase 11_V9_ADSO)
   const contactosFiltrados = contactos.filter((c) => {
     const termino = busqueda.toLowerCase();
     const nombre = c.nombre.toLowerCase();
@@ -209,13 +152,6 @@ const onAgregarContacto = async (nuevoContacto) => {
     );
   });
 
-<<<<<<< HEAD
-  const contactosOrdenados = [...contactosFiltrados].sort((a, b) => {
-    const nombreA = a.nombre.toLowerCase();
-    const nombreB = b.nombre.toLowerCase();
-    if (nombreA < nombreB) return ordenAsc ? -1 : 1;
-    if (nombreA > nombreB) return ordenAsc ? 1 : -1;
-=======
   // ORDENAR contactos
   const contactosOrdenados = [...contactosFiltrados].sort((a, b) => {
     const nombreA = a.nombre.toLowerCase();
@@ -224,32 +160,22 @@ const onAgregarContacto = async (nuevoContacto) => {
     if (nombreA < nombreB) return ordenAsc ? -1 : 1;
     if (nombreA > nombreB) return ordenAsc ? 1 : -1;
 
->>>>>>> 6e8b401 (clase 11_V9_ADSO)
     return 0;
   });
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 py-8">
-<<<<<<< HEAD
-=======
 
->>>>>>> 6e8b401 (clase 11_V9_ADSO)
         <header className="mb-8">
           <p className="text-xs tracking-[0.3em] text-gray-500 uppercase">
             Desarrollo Web ReactJS Ficha {APP_INFO.ficha}
           </p>
-<<<<<<< HEAD
-          <h1 className="text-4xl font-extrabold text-gray-900 mt-2">
-            {APP_INFO.titulo}
-          </h1>
-=======
 
           <h1 className="text-4xl font-extrabold text-gray-900 mt-2">
             {APP_INFO.titulo}
           </h1>
 
->>>>>>> 6e8b401 (clase 11_V9_ADSO)
           <p className="text-sm text-gray-600 mt-1">
             {APP_INFO.subtitulo}
           </p>
@@ -265,27 +191,6 @@ const onAgregarContacto = async (nuevoContacto) => {
           <p className="text-sm text-gray-500">Cargando contactos...</p>
         ) : (
           <>
-<<<<<<< HEAD
-            <FormularioContacto onAgregar={onAgregarContacto} />
-
-            <div className="my-4 flex items-center gap-2">
-              <input
-                type="text"
-                placeholder="Buscar contacto por nombre, correo o etiqueta..."
-                value={busqueda}
-                onChange={(e) => setBusqueda(e.target.value)}
-                className="flex-1 px-3 py-2 border rounded-lg text-sm"
-              />
-              <button
-                onClick={() => setOrdenAsc(!ordenAsc)}
-                className="px-3 py-2 bg-purple-500 text-white rounded-lg text-sm hover:bg-purple-600"
-              >
-                {ordenAsc ? "Ordenar Z-A" : "Ordenar A-Z"}
-              </button>
-            </div>
-
-            <section className="space-y-4">
-=======
             <FormularioContacto
               onAgregar={onAgregarContacto}
               onActualizar={onActualizarContacto}
@@ -315,7 +220,6 @@ const onAgregarContacto = async (nuevoContacto) => {
 
             <section className="space-y-4">
 
->>>>>>> 6e8b401 (clase 11_V9_ADSO)
               {contactosOrdenados.length === 0 ? (
                 <p className="text-sm text-gray-500">
                   No se encontraron contactos que coincidan con la búsqueda.
@@ -329,39 +233,23 @@ const onAgregarContacto = async (nuevoContacto) => {
                     correo={c.correo}
                     etiqueta={c.etiqueta}
                     onEliminar={() => onEliminarContacto(c.id)}
-<<<<<<< HEAD
-                  />
-                ))
-              )}
-=======
                     onEditar={() => onEditarClick(c)}
                   />
                 ))
               )}
 
->>>>>>> 6e8b401 (clase 11_V9_ADSO)
             </section>
           </>
         )}
 
         <footer className="mt-8 text-xs text-gray-400">
-<<<<<<< HEAD
-          <p>Desarrollo Web — ReactJS | Proyecto Agenda ADSO</p>
-          <p>Instructor: Gustavo Adolfo Bolaños Dorado</p>
-        </footer>
-=======
           <p>Desarrollo Web – ReactJS | Proyecto Agenda ADSO</p>
           <p>Instructor: Gustavo Adolfo Bolaños Dorado</p>
         </footer>
 
->>>>>>> 6e8b401 (clase 11_V9_ADSO)
       </div>
     </div>
   );
 }
 
-<<<<<<< HEAD
 export default App;
-=======
-export default App;
->>>>>>> 6e8b401 (clase 11_V9_ADSO)

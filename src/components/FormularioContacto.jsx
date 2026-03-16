@@ -39,8 +39,10 @@ function FormularioContacto({ onAgregar, onActualizar, contactoEnEdicion, onCanc
     e.preventDefault();
     if (!validarFormulario()) return;
 
+    setEnviando(true);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     try {
-      setEnviando(true);
       if (contactoEnEdicion) {
         await onActualizar({ ...form, id: contactoEnEdicion.id });
         if (onCancelarEdicion) onCancelarEdicion();

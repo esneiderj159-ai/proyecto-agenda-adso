@@ -1,40 +1,11 @@
 {
   "contactos": [
     {
-<<<<<<< HEAD
-      "id": "ea6e",
-      "nombre": "milton",
-      "telefono": "300 0000001",
-      "correo": "milton888@gmail.com",
-      "etiqueta": "bombero"
-    },
-    {
-      "id": "8ad1",
-      "nombre": "milton",
-      "telefono": "300 0000001",
-      "correo": "milton888@gmail.com",
-      "etiqueta": "INDIGENTE"
-    },
-    {
-      "id": "7739",
-      "nombre": "SNEIDER ",
-      "telefono": "300 0000001",
-      "correo": "milton888@gmail.com",
-      "etiqueta": "INDIGENTE"
-    },
-    {
-      "id": "88f2",
-      "nombre": "SNEIDER ",
-      "telefono": "300 0000001",
-      "correo": "milton888@gmail.com",
-      "etiqueta": "INDIGENTE"
-=======
-      "id": "282e",
-      "nombre": "cristiano",
-      "telefono": "300 0000001",
-      "correo": "cr72@gmail.com",
-      "etiqueta": "bombero"
->>>>>>> 6e8b401 (clase 11_V9_ADSO)
+      "nombre": "MILTONNN",
+      "telefono": "3001234567",
+      "correo": "juan@example.com",
+      "etiqueta": "BARBERO",
+      "id": "a8fd"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
