@@ -1,6 +1,7 @@
 {
   "contactos": [
     {
+<<<<<<< HEAD
       "id": "ea6e",
       "nombre": "milton",
       "telefono": "300 0000001",
@@ -27,6 +28,13 @@
       "telefono": "300 0000001",
       "correo": "milton888@gmail.com",
       "etiqueta": "INDIGENTE"
+=======
+      "id": "282e",
+      "nombre": "cristiano",
+      "telefono": "300 0000001",
+      "correo": "cr72@gmail.com",
+      "etiqueta": "bombero"
+>>>>>>> 6e8b401 (clase 11_V9_ADSO)
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
