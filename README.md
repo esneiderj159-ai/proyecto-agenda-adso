@@ -1,4 +1,4 @@
-# 📒 Agenda ADSO v10 — Versión PRO de la Interfaz
+#  Agenda ADSO v10 PRO — Versión PRO de la Interfaz
 
 > Dashboard con vistas separadas para crear y gestionar contactos
 
@@ -7,9 +7,9 @@
 
 ---
 
-## ¿Qué es Agenda ADSO v10?
+## ¿Qué es Agenda ADSO v10 PRO?
 
-La versión 10 transforma la aplicación de una sola página CRUD (v9) en un **dashboard profesional** con dos vistas independientes, un panel lateral informativo y un diseño visual moderno listo para portafolio. La lógica de negocio, las APIs y los componentes base se mantienen exactamente igual que en versiones anteriores.
+La versión 10 PRO transforma la aplicación de una sola página CRUD (v9) en un **dashboard profesional** con dos vistas independientes, un panel lateral informativo y un diseño visual moderno listo para portafolio. La lógica de negocio, las APIs y los componentes base se mantienen exactamente igual que en versiones anteriores.
 
 | | v9 | v10 |
 |---|---|---|
@@ -20,7 +20,7 @@ La versión 10 transforma la aplicación de una sola página CRUD (v9) en un **d
 
 ---
 
-## 🛠️ Tecnologías utilizadas
+##  Tecnologías utilizadas
 
 - **ReactJS** — librería principal para construir la interfaz de usuario
 - **Vite** — herramienta de desarrollo y empaquetado rápido
@@ -30,7 +30,7 @@ La versión 10 transforma la aplicación de una sola página CRUD (v9) en un **d
 
 ---
 
-## 🗂️ Estructura del proyecto
+##  Estructura del proyecto
 
 ```
 src/
@@ -45,7 +45,7 @@ src/
 
 ---
 
-## ✨ Funcionalidades implementadas
+##  Funcionalidades implementadas
 
 - Listar contactos al iniciar la app
 - Crear contacto con validación de campos obligatorios
@@ -59,7 +59,7 @@ src/
 
 ---
 
-## 🖥️ Nuevo layout — Dashboard PRO
+##  Nuevo layout — Dashboard PRO
 
 ### Estructura visual
 
@@ -71,7 +71,7 @@ src/
 
 ---
 
-## 🔀 Control de vistas con useState
+##  Control de vistas con useState
 
 La aplicación maneja dos vistas independientes **sin React Router**, usando un estado simple en `App.jsx`:
 
@@ -105,7 +105,7 @@ Presenta el buscador, opciones de ordenamiento y la lista completa. Cuando se ac
 
 ---
 
-## ✏️ Flujo de edición (vista "Contactos")
+##  Flujo de edición (vista "Contactos")
 
 1. El usuario hace clic en **Editar** dentro de una `ContactoCard`.
 2. `onEditarClick(contacto)` guarda el contacto en el estado `contactoEnEdicion`.
@@ -117,7 +117,7 @@ Presenta el buscador, opciones de ordenamiento y la lista completa. Cuando se ac
 
 ---
 
-## 📊 Panel lateral
+## Panel lateral
 
 ### Banner principal (morado)
 - Título: **"Agenda ADSO – Dashboard"**
@@ -136,7 +136,7 @@ Conecta el proyecto con la identidad institucional. Refuerza el valor de crear a
 
 ---
 
-## 🐛 Problemas encontrados y soluciones
+##  Problemas encontrados y soluciones
 
 ### Pantalla en blanco al iniciar la app
 **Causa:** `src/config.js` no existía. `App.jsx` y `api.js` lo importaban, generando error de módulo no encontrado.  
@@ -156,7 +156,7 @@ Conecta el proyecto con la identidad institucional. Refuerza el valor de crear a
 
 ---
 
-## 🚀 Instrucciones para ejecutar
+##  Instrucciones para ejecutar
 
 ```bash
 # 1. Instalar dependencias
@@ -173,7 +173,7 @@ Abrir en el navegador: [http://localhost:5173](http://localhost:5173)
 
 ---
 
-## 📋 Actividad — Personaliza tu dashboard
+##  Actividad — Personaliza tu dashboard
 
 | # | Tarea | Descripción |
 |---|---|---|
@@ -190,7 +190,7 @@ Abrir en el navegador: [http://localhost:5173](http://localhost:5173)
 
 ---
 
-## 🔍 ¿Por qué separar vistas?
+##  ¿Por qué separar vistas?
 
 - **Enfoque claro**: la pantalla de creación queda limpia, sin distracciones.
 - **Gestión centralizada**: la pantalla de contactos se concentra en búsqueda, edición y eliminación.
@@ -199,7 +199,7 @@ Abrir en el navegador: [http://localhost:5173](http://localhost:5173)
 
 ---
 
-## 📈 Evolución del proyecto
+##  Evolución del proyecto
 
 ```
 v7 – v9  →  CRUD funcional + consumo de API con JSON Server
@@ -211,7 +211,7 @@ v7 – v9  →  CRUD funcional + consumo de API con JSON Server
 
 ---
 
-## 📌 Información académica
+##  Información académica
 
 | Campo | Detalle |
 |---|---|
