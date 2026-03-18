@@ -11,8 +11,10 @@ import FormularioContacto from "./components/FormularioContacto"
 import ContactoCard from "./components/ContactoCard"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Login from "./pages/Login"
+import { useAuth } from "./context/useAuth"
 
 function Agenda() {
+  const { logout } = useAuth()
   const [contactos, setContactos] = useState([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState("")
@@ -135,6 +137,7 @@ function Agenda() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900">
+
       <header className="border-b border-slate-800 bg-slate-950/60 backdrop-blur">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -157,6 +160,12 @@ function Agenda() {
             <p className="text-xs text-slate-200">
               Ficha {APP_INFO.ficha}
             </p>
+            <button
+              onClick={logout}
+              className="mt-1 text-xs text-red-400 hover:text-red-300 transition-colors"
+            >
+              Cerrar sesión
+            </button>
           </div>
         </div>
       </header>
