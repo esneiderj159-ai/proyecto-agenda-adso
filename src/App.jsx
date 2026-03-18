@@ -1,156 +1,140 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { useEffect, useState } from "react"
 import {
   listarContactos,
   crearContacto,
   actualizarContacto,
   eliminarContactoPorId,
-} from "./api";
-import { APP_INFO } from "./config";
-import FormularioContacto from "./components/FormularioContacto";
-import ContactoCard from "./components/ContactoCard";
+} from "./api"
+import { APP_INFO } from "./config"
+import FormularioContacto from "./components/FormularioContacto"
+import ContactoCard from "./components/ContactoCard"
+import ProtectedRoute from "./components/ProtectedRoute"
+import Login from "./pages/Login"
 
-function App() {
-  // Estado con todos los contactos obtenidos desde la API
-  const [contactos, setContactos] = useState([]);
-  // Estado de carga mientras se consulta la API
-  const [cargando, setCargando] = useState(true);
-  // Estado para mostrar mensajes de error globales
-  const [error, setError] = useState("");
-  // Estado del término de búsqueda (solo se usa en la vista "contactos")
-  const [busqueda, setBusqueda] = useState("");
-  // Estado del orden de la lista: true = A-Z, false = Z-A
-  const [ordenAsc, setOrdenAsc] = useState(true);
-  // Estado del contacto que se está editando (o null si no hay edición)
-  const [contactoEnEdicion, setContactoEnEdicion] = useState(null);
-  // Estado de la vista actual ("crear" o "contactos")
-  const [vista, setVista] = useState("crear");
+function Agenda() {
+  const [contactos, setContactos] = useState([])
+  const [cargando, setCargando] = useState(true)
+  const [error, setError] = useState("")
+  const [busqueda, setBusqueda] = useState("")
+  const [ordenAsc, setOrdenAsc] = useState(true)
+  const [contactoEnEdicion, setContactoEnEdicion] = useState(null)
+  const [vista, setVista] = useState("crear")
 
-  // useEffect para cargar la lista de contactos al iniciar la aplicación
   useEffect(() => {
     const cargarContactos = async () => {
       try {
-        setCargando(true);
-        setError("");
-        const data = await listarContactos();
-        setContactos(data);
+        setCargando(true)
+        setError("")
+        const data = await listarContactos()
+        setContactos(data)
       } catch (error) {
-        console.error("Error al cargar contactos:", error);
+        console.error("Error al cargar contactos:", error)
         setError(
           "No se pudieron cargar los contactos. Verifica que el servidor esté encendido e intenta de nuevo."
-        );
+        )
       } finally {
-        setCargando(false);
+        setCargando(false)
       }
-    };
-    cargarContactos();
-  }, []);
+    }
+    cargarContactos()
+  }, [])
 
-  // Crear contacto (CREATE)
   const onAgregarContacto = async (nuevoContacto) => {
     try {
-      setError("");
-      const creado = await crearContacto(nuevoContacto);
-      setContactos((prev) => [...prev, creado]);
+      setError("")
+      const creado = await crearContacto(nuevoContacto)
+      setContactos((prev) => [...prev, creado])
     } catch (error) {
-      console.error("Error al crear contacto:", error);
+      console.error("Error al crear contacto:", error)
       setError(
         "No se pudo guardar el contacto. Verifica tu conexión o el estado del servidor e intenta nuevamente."
-      );
-      throw error;
+      )
+      throw error
     }
-  };
+  }
 
-  // Actualizar contacto (UPDATE)
   const onActualizarContacto = async (contactoActualizado) => {
     try {
-      setError("");
+      setError("")
       const actualizado = await actualizarContacto(
         contactoActualizado.id,
         contactoActualizado
-      );
+      )
       setContactos((prev) =>
         prev.map((c) => (c.id === actualizado.id ? actualizado : c))
-      );
-      setContactoEnEdicion(null);
+      )
+      setContactoEnEdicion(null)
     } catch (error) {
-      console.error("Error al actualizar contacto:", error);
+      console.error("Error al actualizar contacto:", error)
       setError(
         "No se pudo actualizar el contacto. Verifica tu conexión o el servidor e intenta nuevamente."
-      );
-      throw error;
+      )
+      throw error
     }
-  };
+  }
 
-  // Eliminar contacto (DELETE)
   const onEliminarContacto = async (id) => {
     try {
-      setError("");
-      await eliminarContactoPorId(id);
-      setContactos((prev) => prev.filter((c) => c.id !== id));
+      setError("")
+      await eliminarContactoPorId(id)
+      setContactos((prev) => prev.filter((c) => c.id !== id))
       setContactoEnEdicion((actual) =>
         actual && actual.id === id ? null : actual
-      );
+      )
     } catch (error) {
-      console.error("Error al eliminar contacto:", error);
+      console.error("Error al eliminar contacto:", error)
       setError(
         "No se pudo eliminar el contacto. Vuelve a intentarlo o verifica el servidor."
-      );
+      )
     }
-  };
+  }
 
-  // Activar modo edición
   const onEditarClick = (contacto) => {
-    setContactoEnEdicion(contacto);
-    setError("");
-  };
+    setContactoEnEdicion(contacto)
+    setError("")
+  }
 
-  // Cancelar edición
   const onCancelarEdicion = () => {
-    setContactoEnEdicion(null);
-  };
+    setContactoEnEdicion(null)
+  }
 
-  // Cambiar a vista de contactos
   const irAVerContactos = () => {
-    setVista("contactos");
-    setContactoEnEdicion(null);
-  };
+    setVista("contactos")
+    setContactoEnEdicion(null)
+  }
 
-  // Volver a vista de creación
   const irACrearContacto = () => {
-    setVista("crear");
-    setContactoEnEdicion(null);
-    setBusqueda("");
-  };
+    setVista("crear")
+    setContactoEnEdicion(null)
+    setBusqueda("")
+  }
 
-  // Filtrado por búsqueda
   const contactosFiltrados = contactos.filter((c) => {
-    const termino = busqueda.toLowerCase();
-    const nombre = c.nombre.toLowerCase();
-    const correo = c.correo.toLowerCase();
-    const etiqueta = (c.etiqueta || "").toLowerCase();
+    const termino = busqueda.toLowerCase()
+    const nombre = c.nombre.toLowerCase()
+    const correo = c.correo.toLowerCase()
+    const etiqueta = (c.etiqueta || "").toLowerCase()
     return (
       nombre.includes(termino) ||
       correo.includes(termino) ||
       etiqueta.includes(termino)
-    );
-  });
+    )
+  })
 
-  // Ordenamiento A-Z / Z-A
   const contactosOrdenados = [...contactosFiltrados].sort((a, b) => {
-    const nombreA = a.nombre.toLowerCase();
-    const nombreB = b.nombre.toLowerCase();
-    if (nombreA < nombreB) return ordenAsc ? -1 : 1;
-    if (nombreA > nombreB) return ordenAsc ? 1 : -1;
-    return 0;
-  });
+    const nombreA = a.nombre.toLowerCase()
+    const nombreB = b.nombre.toLowerCase()
+    if (nombreA < nombreB) return ordenAsc ? -1 : 1
+    if (nombreA > nombreB) return ordenAsc ? 1 : -1
+    return 0
+  })
 
-  const estaEnVistaCrear = vista === "crear";
-  const estaEnVistaContactos = vista === "contactos";
+  const estaEnVistaCrear = vista === "crear"
+  const estaEnVistaContactos = vista === "contactos"
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900">
-
-      {/* Barra superior */}
       <header className="border-b border-slate-800 bg-slate-950/60 backdrop-blur">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -177,14 +161,9 @@ function App() {
         </div>
       </header>
 
-      {/* Contenido principal en grid 2 columnas */}
       <main className="max-w-6xl mx-auto px-4 py-8 md:py-10 pb-14">
         <div className="grid gap-8 md:grid-cols-[1.6fr,1fr] items-start">
-
-          {/* COLUMNA IZQUIERDA */}
           <div className="bg-white/95 rounded-3xl shadow-2xl border border-slate-100 px-6 py-7 md:px-8 md:py-8">
-
-            {/* Encabezado dentro de la tarjeta */}
             <header className="mb-5 flex items-start justify-between gap-3">
               <div>
                 <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900">
@@ -201,8 +180,6 @@ function App() {
                   </span>
                 </div>
               </div>
-
-              {/* Botón para cambiar de vista */}
               <div className="flex flex-col items-end gap-2">
                 <span className="text-[11px] uppercase tracking-[0.16em] text-gray-400">
                   {estaEnVistaCrear ? "Modo creación" : "Modo contactos"}
@@ -227,19 +204,16 @@ function App() {
               </div>
             </header>
 
-            {/* Mensaje de error global */}
             {error && (
               <div className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
                 <p className="text-sm font-medium text-red-700">{error}</p>
               </div>
             )}
 
-            {/* Contenido según la vista */}
             {cargando ? (
               <p className="text-sm text-gray-500">Cargando contactos...</p>
             ) : (
               <>
-                {/* VISTA CREAR */}
                 {estaEnVistaCrear && (
                   <FormularioContacto
                     onAgregar={onAgregarContacto}
@@ -249,10 +223,8 @@ function App() {
                   />
                 )}
 
-                {/* VISTA CONTACTOS */}
                 {estaEnVistaContactos && (
                   <>
-                    {/* Formulario en modo edición */}
                     {contactoEnEdicion && (
                       <div className="mb-4">
                         <FormularioContacto
@@ -264,7 +236,6 @@ function App() {
                       </div>
                     )}
 
-                    {/* Barra de búsqueda + orden + contador */}
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
                       <div className="flex-1">
                         <input
@@ -289,7 +260,6 @@ function App() {
                       </button>
                     </div>
 
-                    {/* Lista de contactos */}
                     <section className="space-y-3 md:space-y-4">
                       {contactosOrdenados.length === 0 ? (
                         <p className="text-sm text-gray-500">
@@ -315,10 +285,7 @@ function App() {
             )}
           </div>
 
-          {/* COLUMNA DERECHA: Panel lateral */}
           <aside className="space-y-4 md:space-y-5">
-
-            {/* Banner morado principal */}
             <div className="rounded-3xl bg-gradient-to-br from-purple-600 to-purple-800 text-white p-6 shadow-xl flex flex-col justify-between min-h-[220px]">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.3em] text-purple-100/80">
@@ -344,7 +311,6 @@ function App() {
               </div>
             </div>
 
-            {/* Tarjeta de tips de código */}
             <div className="rounded-2xl bg-white/90 border border-slate-100 p-4 shadow-sm">
               <h3 className="text-sm font-semibold text-gray-900">
                 Tips de código limpio
@@ -357,7 +323,6 @@ function App() {
               </ul>
             </div>
 
-            {/* Tarjeta SENA / motivacional */}
             <div className="rounded-2xl bg-slate-900 border border-slate-700 p-4 text-slate-100 shadow-sm">
               <p className="text-[10px] uppercase tracking-[0.3em] text-slate-400">
                 SENA CTMA · ADSO
@@ -370,12 +335,30 @@ function App() {
                 código. Agenda ADSO es tu carta de presentación como desarrollador."
               </p>
             </div>
-
           </aside>
         </div>
       </main>
     </div>
-  );
+  )
 }
 
-export default App;
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Agenda />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </BrowserRouter>
+  )
+}
+
+export default App
