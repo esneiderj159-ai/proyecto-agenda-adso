@@ -1,18 +1,18 @@
 {
   "contactos": [
     {
-      "nombre": "MILTONNN",
-      "telefono": "3001234567",
-      "correo": "juan@example.com",
-      "etiqueta": "BARBERO",
-      "id": "a8fd"
-    },
-    {
       "id": "411d",
       "nombre": "angel el beibi",
       "telefono": "3001234567",
       "correo": "cr72@gmail.com",
       "etiqueta": "futbolista"
+    },
+    {
+      "nombre": "DIEGO BERMUDEZ",
+      "telefono": "77777777777777",
+      "correo": "CAN@GMAIL.COM",
+      "etiqueta": "futbolista",
+      "id": "d528"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
